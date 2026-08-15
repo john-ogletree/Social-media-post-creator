@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>OmniPost - Balanced Scale 9:16 Creator</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.4); }
+        ::-webkit-scrollbar-thumb { background: rgba(51, 65, 85, 0.6); border-radius: 9999px; }
+        .checkerboard {
+            background-color: #050810;
+            background-image: linear-gradient(45deg, #0f172a 25%, transparent 25%), linear-gradient(-45deg, #0f172a 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #0f172a 75%), linear-gradient(-45deg, transparent 75%, #0f172a 75%);
+            background-size: 24px 24px;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: none; border-radius: 0.5rem; }
+    </style>
+</head>
+<body class="h-full font-sans antialiased flex flex-col overflow-hidden select-none">
+
+    <!-- Top Navigation Bar -->
+    <header class="h-14 border-b border-slate-800 bg-slate-950/90 backdrop-blur-md px-4 flex items-center justify-between z-30 shrink-0">
+        <div class="flex items-center space-x-2.5">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                <i data-lucide="layout" class="w-4 h-4 text-white"></i>
+            </div>
+            <h1 class="font-bold text-sm tracking-tight text-white">OmniPost <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300">Balanced Scale</span></h1>
+        </div>
+
+        <button onclick="exportImage()" class="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-indigo-600/30">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Export 9:16 Image</span>
+        </button>
+    </header>
+
+    <!-- Main Workspace -->
+    <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
+
+        <!-- Stage Preview Area -->
+        <main class="w-full md:flex-1 bg-slate-950 checkerboard relative flex items-center justify-center p-4 overflow-hidden h-[48vh] md:h-auto shrink-0 border-b md:border-b-0 md:border-r border-slate-800">
+            <div class="relative h-full max-h-full flex items-center justify-center shadow-2xl rounded-2xl overflow-hidden bg-slate-900">
+                <canvas id="postCanvas" class="h-full w-auto max-w-full object-contain transition-all duration-300"></canvas>
+            </div>
+        </main>
+
+        <!-- Control Panel -->
+        <aside class="w-full md:w-[420px] bg-slate-950 flex flex-col flex-1 overflow-hidden z-20">
+            <div class="grid grid-cols-2 border-b border-slate-800 bg-slate-900/80 p-1 text-xs font-medium shrink-0">
+                <button onclick="switchTab('content')" id="tabBtn-content" class="py-2.5 rounded-lg flex items-center justify-center gap-1.5 text-indigo-400 bg-slate-800 font-semibold">
+                    <i data-lucide="type" class="w-3.5 h-3.5"></i>
+                    <span>Quote & Text</span>
+                </button>
+                <button onclick="switchTab('meta')" id="tabBtn-meta" class="py-2.5 rounded-lg flex items-center justify-center gap-1.5 text-slate-400 hover:text-slate-200">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                    <span>JS Dynamic Header</span>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                <!-- TAB 1: CONTENT -->
+                <div id="tab-content" class="tab-content space-y-3">
+                    <div>
+                        <label class="text-xs font-semibold text-slate-300 mb-1 block">Main Quote / Card Text</label>
+                        <textarea id="quoteText" rows="4" oninput="updatePost()" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-sm text-white focus:border-indigo-500 focus:outline-none resize-none font-semibold">Walls don't talk, but they definitely listen</textarea>
+                    </div>
+
+                    <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-3 text-xs">
+                        <span class="font-semibold text-slate-300 block">Theme & Color Customization</span>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-300">Background Color</span>
+                            <input type="color" id="bgBaseColor" value="#04060a" onchange="updatePost()" class="w-8 h-8 bg-transparent cursor-pointer">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-300">Card Box Color</span>
+                            <input type="color" id="cardBgColor" value="#0d111c" onchange="updatePost()" class="w-8 h-8 bg-transparent cursor-pointer">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-300">Text Color</span>
+                            <input type="color" id="textColor" value="#ffffff" onchange="updatePost()" class="w-8 h-8 bg-transparent cursor-pointer">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-300">Accent Pill Color</span>
+                            <input type="color" id="accentColor" value="#2563eb" onchange="updatePost()" class="w-8 h-8 bg-transparent cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: JS DYNAMIC HEADER -->
+                <div id="tab-meta" class="tab-content space-y-3 hidden">
+                    <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-3 text-xs">
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-indigo-400 flex items-center gap-1.5">
+                                <i data-lucide="code" class="w-3.5 h-3.5"></i> Automated JS Controls
+                            </span>
+                            <button onclick="loadLiveDateTime()" class="text-[10px] bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 px-2.5 py-1 rounded-md font-medium transition-colors">
+                                Sync with Today
+                            </button>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-[10px] text-slate-400 block mb-1">Day Tag (JS Auto)</label>
+                                <input type="text" id="tagDay" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                            </div>
+                            <div>
+                                <label class="text-[10px] text-slate-400 block mb-1">Progress % (JS Auto)</label>
+                                <input type="text" id="tagProgress" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 pt-1">
+                            <div>
+                                <label class="text-[10px] text-slate-400 block mb-1">Date (JS Auto)</label>
+                                <input type="text" id="tagDate" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                            </div>
+                            <div>
+                                <label class="text-[10px] text-slate-400 block mb-1">Year (JS Auto)</label>
+                                <input type="text" id="tagYear" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                            </div>
+                        </div>
+
+                        <div class="pt-1">
+                            <label class="text-[10px] text-slate-400 block mb-1">Top Handle</label>
+                            <input type="text" id="tagHandle" value="@JVHNOGL3" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-3 text-xs">
+                        <span class="font-semibold text-slate-300 block">Bottom Signature</span>
+                        <input type="text" id="footerText" value="@JVHNOGL3 // JOHN-OGLETREE" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        const state = {
+            quoteText: "Walls don't talk, but they definitely listen",
+            bgBaseColor: "#04060a",
+            cardBgColor: "#0d111c",
+            textColor: "#ffffff",
+            accentColor: "#2563eb",
+            tagDay: "",
+            tagProgress: "",
+            tagDate: "",
+            tagYear: "",
+            tagHandle: "@JVHNOGL3",
+            footerText: "@JVHNOGL3 // JOHN-OGLETREE"
+        };
+
+        const canvas = document.getElementById('postCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function loadLiveDateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const start = new Date(year, 0, 0);
+            const diff = now - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            const dayOfYear = Math.floor(diff / oneDay);
+            const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+            const totalDays = isLeap ? 366 : 365;
+            const progressPercent = Math.round((dayOfYear / totalDays) * 100) + '%';
+
+            const dd = String(now.getDate()).padStart(2, '0');
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const formattedDate = `${dd}.${mm}.${year}`;
+            const dayString = `DAY ${String(dayOfYear).padStart(3, '0')}`;
+
+            document.getElementById('tagDay').value = dayString;
+            document.getElementById('tagProgress').value = progressPercent;
+            document.getElementById('tagDate').value = formattedDate;
+            document.getElementById('tagYear').value = year;
+
+            updatePost();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            loadLiveDateTime();
+        });
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+
+            ['content', 'meta'].forEach(id => {
+                const btn = document.getElementById(`tabBtn-${id}`);
+                if (id === tabName) {
+                    btn.className = "py-2.5 rounded-lg flex items-center justify-center gap-1.5 text-indigo-400 bg-slate-800 font-semibold";
+                } else {
+                    btn.className = "py-2.5 rounded-lg flex items-center justify-center gap-1.5 text-slate-400 hover:text-slate-200";
+                }
+            });
+        }
+
+        function updatePost() {
+            state.quoteText = document.getElementById('quoteText').value;
+            state.bgBaseColor = document.getElementById('bgBaseColor').value;
+            state.cardBgColor = document.getElementById('cardBgColor').value;
+            state.textColor = document.getElementById('textColor').value;
+            state.accentColor = document.getElementById('accentColor').value;
+            state.tagDay = document.getElementById('tagDay').value;
+            state.tagProgress = document.getElementById('tagProgress').value;
+            state.tagDate = document.getElementById('tagDate').value;
+            state.tagYear = document.getElementById('tagYear').value;
+            state.tagHandle = document.getElementById('tagHandle').value;
+            state.footerText = document.getElementById('footerText').value;
+
+            const w = 1080;
+            const h = 1920;
+            canvas.width = w;
+            canvas.height = h;
+
+            // 1. Fill base background
+            ctx.fillStyle = state.bgBaseColor;
+            ctx.fillRect(0, 0, w, h);
+
+            // 2. Draw Center 4:5 Card
+            const cardW = 840;
+            const cardH = 1080;
+            const cardX = (w - cardW) / 2;
+            const cardY = (h - cardH) / 2 - 10;
+
+            ctx.save();
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+            ctx.shadowBlur = 60;
+            ctx.shadowOffsetY = 25;
+            drawRoundedRect(ctx, cardX, cardY, cardW, cardH, 64, state.cardBgColor);
+            ctx.restore();
+
+            // 3. Balanced Adaptive Font Scaling (capped at a clean max size of 76px so short text doesn't blow up oversize)
+            const maxAllowedWidth = cardW - 140; 
+            const maxAllowedHeight = cardH - 120;
+            
+            let fontSize = 24; 
+            const maxFontSize = 76; // Balanced limit for aesthetic spacing
+            let bestLines = [];
+            let bestLineHeight = 0;
+
+            while (fontSize <= maxFontSize) {
+                ctx.font = `800 ${fontSize}px Inter, sans-serif`;
+                const testLines = getBulletproofLines(ctx, state.quoteText, maxAllowedWidth);
+                const testLineHeight = fontSize * 1.25;
+                const totalHeight = testLines.length * testLineHeight;
+
+                if (totalHeight <= maxAllowedHeight) {
+                    bestLines = testLines;
+                    bestLineHeight = testLineHeight;
+                    fontSize += 2;
+                } else {
+                    break;
+                }
+            }
+
+            if (bestLines.length === 0) {
+                fontSize = 24;
+                ctx.font = `800 ${fontSize}px Inter, sans-serif`;
+                bestLines = getBulletproofLines(ctx, state.quoteText, maxAllowedWidth);
+                bestLineHeight = fontSize * 1.25;
+            } else {
+                fontSize -= 2;
+                ctx.font = `800 ${fontSize}px Inter, sans-serif`;
+                bestLines = getBulletproofLines(ctx, state.quoteText, maxAllowedWidth);
+                bestLineHeight = fontSize * 1.25;
+            }
+
+            // Draw Centered Scaled Quote Text
+            ctx.save();
+            ctx.font = `800 ${fontSize}px Inter, sans-serif`;
+            ctx.fillStyle = state.textColor;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            const totalTextHeight = bestLines.length * bestLineHeight;
+            let startY = cardY + (cardH / 2) - (totalTextHeight / 2);
+
+            bestLines.forEach((line, index) => {
+                ctx.fillText(line, w / 2, startY + (index * bestLineHeight) + (bestLineHeight / 2));
+            });
+            ctx.restore();
+
+            // 4. Draw Dynamic Top Header
+            drawTopHeaderTags(ctx, cardX, cardY - 95, cardW);
+
+            // 5. Draw Side Icons
+            drawSideIcons(ctx, cardX, cardY, cardH);
+
+            // 6. Draw Bottom Signature Footer
+            ctx.save();
+            ctx.font = '600 24px Inter, sans-serif';
+            ctx.fillStyle = '#64748b';
+            ctx.textAlign = 'center';
+            ctx.fillText(state.footerText, w / 2, cardY + cardH + 110);
+            ctx.restore();
+        }
+
+        function getBulletproofLines(ctx, text, maxW) {
+            const rawWords = text.split(/\s+/);
+            const lines = [];
+            let currentLine = '';
+
+            rawWords.forEach(word => {
+                if (ctx.measureText(word).width > maxW) {
+                    if (currentLine) {
+                        lines.push(currentLine);
+                        currentLine = '';
+                    }
+                    let subWord = '';
+                    for (let char of word) {
+                        if (ctx.measureText(subWord + char).width <= maxW) {
+                            subWord += char;
+                        } else {
+                            lines.push(subWord);
+                            subWord = char;
+                        }
+                    }
+                    if (subWord) currentLine = subWord;
+                } else {
+                    const testLine = currentLine ? currentLine + ' ' + word : word;
+                    if (ctx.measureText(testLine).width <= maxW) {
+                        currentLine = testLine;
+                    } else {
+                        lines.push(currentLine);
+                        currentLine = word;
+                    }
+                }
+            });
+            if (currentLine) {
+                lines.push(currentLine);
+            }
+            return lines;
+        }
+
+        function drawTopHeaderTags(ctx, cardX, y, cardW) {
+            ctx.save();
+            ctx.font = '700 20px Inter, sans-serif';
+            const pillH = 56;
+
+            drawRoundedRect(ctx, cardX, y, 130, pillH, 16, '#0f172a');
+            ctx.fillStyle = '#94a3b8';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillText(state.tagDay, cardX + 65, y + pillH/2);
+
+            drawRoundedRect(ctx, cardX + 140, y, 90, pillH, 16, '#0f172a');
+            ctx.fillStyle = '#94a3b8';
+            ctx.fillText(state.tagProgress, cardX + 140 + 45, y + pillH/2);
+
+            drawRoundedRect(ctx, cardX + 240, y, 95, pillH, 16, '#0f172a');
+            ctx.fillStyle = '#94a3b8';
+            ctx.fillText(state.tagYear, cardX + 240 + 47, y + pillH/2);
+
+            const handleText = state.tagHandle;
+            const handleW = Math.max(160, ctx.measureText(handleText).width + 30);
+            const dateW = 150;
+
+            const handleX = cardX + cardW - handleW;
+            const dateX = handleX - dateW - 12;
+
+            drawRoundedRect(ctx, dateX, y, dateW, pillH, 16, state.accentColor);
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText(state.tagDate, dateX + dateW/2, y + pillH/2);
+
+            drawRoundedRect(ctx, handleX, y, handleW, pillH, 16, state.accentColor);
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText(handleText, handleX + handleW/2, y + pillH/2);
+
+            ctx.restore();
+        }
+
+        function drawSideIcons(ctx, cardX, cardY, cardH) {
+            const leftX = 75;
+            const rightX = 1080 - 75;
+            const iconsY = [cardY + 160, cardY + 330, cardY + 500, cardY + 670, cardY + 840];
+            const radius = 34;
+
+            iconsY.forEach((y, i) => {
+                ctx.beginPath(); ctx.arc(leftX, y, radius, 0, Math.PI * 2); ctx.fillStyle = '#0f172a'; ctx.fill();
+                ctx.beginPath(); ctx.arc(rightX, y, radius, 0, Math.PI * 2); ctx.fillStyle = '#0f172a'; ctx.fill();
+            });
+
+            ctx.save();
+            ctx.strokeStyle = '#94a3b8';
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            // Left Icons
+            let cy = iconsY[0];
+            ctx.fillStyle = '#94a3b8'; ctx.font = '800 32px Inter, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillText('f', leftX, cy + 2);
+
+            cy = iconsY[1];
+            ctx.fillText('@', leftX, cy + 2);
+
+            cy = iconsY[2];
+            ctx.font = '800 26px Inter, sans-serif';
+            ctx.fillText('𝕏', leftX, cy + 1);
+
+            cy = iconsY[3];
+            ctx.font = '800 30px Inter, sans-serif';
+            ctx.fillText('t', leftX, cy + 1);
+
+            cy = iconsY[4];
+            ctx.beginPath();
+            ctx.arc(leftX, cy, 14, Math.PI, 0, false);
+            ctx.lineTo(leftX + 14, cy + 10);
+            ctx.lineTo(leftX + 4, cy + 6);
+            ctx.lineTo(leftX - 4, cy + 6);
+            ctx.closePath();
+            ctx.fillStyle = '#94a3b8'; ctx.fill();
+
+            // Right Icons
+            cy = iconsY[0];
+            ctx.beginPath();
+            ctx.arc(rightX, cy - 2, 11, Math.PI, 0, false);
+            ctx.lineTo(rightX + 13, cy + 10);
+            ctx.quadraticCurveTo(rightX, cy + 14, rightX - 13, cy + 10);
+            ctx.closePath();
+            ctx.fillStyle = '#94a3b8'; ctx.fill();
+
+            cy = iconsY[1];
+            ctx.font = '700 26px Inter, sans-serif'; ctx.fillText('♪', rightX, cy + 2);
+
+            cy = iconsY[2];
+            ctx.beginPath();
+            ctx.moveTo(rightX - 10, cy - 10);
+            ctx.lineTo(rightX + 12, cy);
+            ctx.lineTo(rightX - 10, cy + 10);
+            ctx.closePath();
+            ctx.fillStyle = '#94a3b8'; ctx.fill();
+
+            cy = iconsY[3];
+            ctx.strokeRect(rightX - 13, cy - 13, 26, 26);
+            ctx.beginPath(); ctx.arc(rightX, cy, 6, 0, Math.PI * 2); ctx.stroke();
+            ctx.beginPath(); ctx.arc(rightX + 8, cy - 8, 2, 0, Math.PI * 2); ctx.fillStyle = '#94a3b8'; ctx.fill();
+
+            cy = iconsY[4];
+            ctx.font = '700 22px Inter, sans-serif'; ctx.fillText('in', rightX, cy + 1);
+
+            ctx.restore();
+        }
+
+        function drawRoundedPath(ctx, x, y, w, h, r) {
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+            ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+            ctx.lineTo(x + r, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+            ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y);
+            ctx.closePath();
+        }
+
+        function drawRoundedRect(ctx, x, y, w, h, r, col) {
+            ctx.fillStyle = col;
+            drawRoundedPath(ctx, x, y, w, h, r);
+            ctx.fill();
+        }
+
+        function exportImage() {
+            updatePost();
+            const link = document.createElement('a');
+            link.download = `omnipost-balanced-916-${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png', 1.0);
+            link.click();
+        }
+    </script>
+</body>
+</html>
