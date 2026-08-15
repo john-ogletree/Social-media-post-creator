@@ -20,9 +20,13 @@
         body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         .support-link {
             transition: all 0.2s;
+            cursor: pointer;
         }
         .support-link:hover {
             transform: scale(1.02);
+        }
+        .support-link:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
@@ -157,7 +161,8 @@
                         </p>
                         
                         <div class="space-y-2.5 pt-1">
-                            <a href="https://cash.app/$john0ogletree" target="_blank" class="support-link flex items-center justify-between bg-slate-950 border border-slate-700 hover:border-green-500/50 rounded-lg px-3.5 py-2.5 transition-colors">
+                            <!-- CashApp - Clickable -->
+                            <a href="https://cash.app/$john0ogletree" target="_blank" rel="noopener noreferrer" class="support-link flex items-center justify-between bg-slate-950 border border-slate-700 hover:border-green-500/50 rounded-lg px-3.5 py-2.5 transition-colors no-underline">
                                 <div class="flex items-center gap-2.5">
                                     <span class="text-lg">💰</span>
                                     <span class="font-medium text-sm text-white">CashApp</span>
@@ -165,7 +170,8 @@
                                 <span class="text-xs text-green-400 font-mono">$john0ogletree</span>
                             </a>
                             
-                            <a href="https://www.chime.com/" target="_blank" class="support-link flex items-center justify-between bg-slate-950 border border-slate-700 hover:border-blue-500/50 rounded-lg px-3.5 py-2.5 transition-colors">
+                            <!-- Chime - Clickable (opens Chime app/website) -->
+                            <a href="https://www.chime.com/" target="_blank" rel="noopener noreferrer" class="support-link flex items-center justify-between bg-slate-950 border border-slate-700 hover:border-blue-500/50 rounded-lg px-3.5 py-2.5 transition-colors no-underline">
                                 <div class="flex items-center gap-2.5">
                                     <span class="text-lg">🏦</span>
                                     <span class="font-medium text-sm text-white">Chime</span>
@@ -173,7 +179,8 @@
                                 <span class="text-xs text-blue-400 font-mono">$john0ogletree</span>
                             </a>
                             
-                            <a href="https://venmo.com/john0ogletree" target="_blank" class="support-link flex items-center justify-between bg-slate-950 border border-slate-700 hover:border-blue-400/50 rounded-lg px-3.5 py-2.5 transition-colors">
+                            <!-- Venmo - Clickable -->
+                            <a href="https://venmo.com/john0ogletree" target="_blank" rel="noopener noreferrer" class="support-link flex items-center justify-between bg-slate-950 border border-slate-700 hover:border-blue-400/50 rounded-lg px-3.5 py-2.5 transition-colors no-underline">
                                 <div class="flex items-center gap-2.5">
                                     <span class="text-lg">💳</span>
                                     <span class="font-medium text-sm text-white">Venmo</span>
