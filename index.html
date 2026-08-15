@@ -129,7 +129,7 @@
                     </div>
                 </div>
 
-                <!-- TAB 2: TEMPLATES (NEW) -->
+                <!-- TAB 2: TEMPLATES -->
                 <div id="tab-templates" class="tab-content space-y-3 hidden">
                     <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
                         <div class="flex items-center gap-2 mb-3">
@@ -235,12 +235,12 @@
                         </div>
                         <div class="pt-1">
                             <label class="text-[10px] text-slate-400 block mb-1">Top Handle</label>
-                            <input type="text" id="tagHandle" value="@JVHNOGL3" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                            <input type="text" id="tagHandle" value="@john0ogletree" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
                         </div>
                     </div>
                     <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-3 text-xs">
                         <span class="font-semibold text-slate-300 block">Bottom Signature</span>
-                        <input type="text" id="footerText" value="@JVHNOGL3 // JOHN-OGLETREE" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                        <input type="text" id="footerText" value="@john0ogletree // JOHN-OGLETREE" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
                     </div>
                 </div>
 
@@ -305,8 +305,8 @@
                 tagProgress: "",
                 tagDate: "",
                 tagYear: "",
-                tagHandle: "@JVHNOGL3",
-                footerText: "@JVHNOGL3 // JOHN-OGLETREE"
+                tagHandle: "@john0ogletree",
+                footerText: "@john0ogletree // JOHN-OGLETREE"
             };
 
             const canvas = document.getElementById('postCanvas');
@@ -356,16 +356,12 @@
                 const t = templates[type];
                 if (!t) return;
                 
-                // Apply template colors
                 document.getElementById('bgBaseColor').value = t.bg;
                 document.getElementById('cardBgColor').value = t.card;
                 document.getElementById('textColor').value = t.text;
                 document.getElementById('accentColor').value = t.accent;
                 
-                // Update the canvas
                 updatePost();
-                
-                // Show feedback
                 showToast(`✅ Applied "${type}" template`);
             };
 
