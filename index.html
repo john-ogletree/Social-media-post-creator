@@ -6,12 +6,7 @@
     <title>OmniPost - Balanced Scale 9:16 Creator</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- No Google Fonts, no Lucide Icons -->
     <style>
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.4); }
@@ -23,6 +18,8 @@
         }
         input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
         input[type="color"]::-webkit-color-swatch { border: none; border-radius: 0.5rem; }
+        /* fallback font stack */
+        body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
     </style>
 </head>
 <body class="h-full font-sans antialiased flex flex-col overflow-hidden select-none">
@@ -31,13 +28,14 @@
     <header class="h-14 border-b border-slate-800 bg-slate-950/90 backdrop-blur-md px-4 flex items-center justify-between z-30 shrink-0">
         <div class="flex items-center space-x-2.5">
             <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                <i data-lucide="layout" class="w-4 h-4 text-white"></i>
+                <!-- no icon -->
+                <span class="text-white font-bold text-xs">◈</span>
             </div>
             <h1 class="font-bold text-sm tracking-tight text-white">OmniPost <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300">Balanced Scale</span></h1>
         </div>
 
         <button onclick="exportImage()" class="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-indigo-600/30">
-            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span class="text-base leading-none">⬇</span>
             <span>Export 9:16 Image</span>
         </button>
     </header>
@@ -56,11 +54,11 @@
         <aside class="w-full md:w-[420px] bg-slate-950 flex flex-col flex-1 overflow-hidden z-20">
             <div class="grid grid-cols-2 border-b border-slate-800 bg-slate-900/80 p-1 text-xs font-medium shrink-0">
                 <button onclick="switchTab('content')" id="tabBtn-content" class="py-2.5 rounded-lg flex items-center justify-center gap-1.5 text-indigo-400 bg-slate-800 font-semibold">
-                    <i data-lucide="type" class="w-3.5 h-3.5"></i>
+                    <span class="text-base">📝</span>
                     <span>Quote & Text</span>
                 </button>
                 <button onclick="switchTab('meta')" id="tabBtn-meta" class="py-2.5 rounded-lg flex items-center justify-center gap-1.5 text-slate-400 hover:text-slate-200">
-                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                    <span class="text-base">⚙️</span>
                     <span>JS Dynamic Header</span>
                 </button>
             </div>
@@ -99,7 +97,7 @@
                     <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-3 text-xs">
                         <div class="flex items-center justify-between">
                             <span class="font-semibold text-indigo-400 flex items-center gap-1.5">
-                                <i data-lucide="code" class="w-3.5 h-3.5"></i> Automated JS Controls
+                                <span class="text-base">⚡</span> Automated JS Controls
                             </span>
                             <button onclick="loadLiveDateTime()" class="text-[10px] bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 px-2.5 py-1 rounded-md font-medium transition-colors">
                                 Sync with Today
@@ -186,7 +184,6 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
             loadLiveDateTime();
         });
 
@@ -239,17 +236,17 @@
             drawRoundedRect(ctx, cardX, cardY, cardW, cardH, 64, state.cardBgColor);
             ctx.restore();
 
-            // 3. Balanced Adaptive Font Scaling (capped at a clean max size of 76px so short text doesn't blow up oversize)
+            // 3. Balanced Adaptive Font Scaling
             const maxAllowedWidth = cardW - 140; 
             const maxAllowedHeight = cardH - 120;
             
             let fontSize = 24; 
-            const maxFontSize = 76; // Balanced limit for aesthetic spacing
+            const maxFontSize = 76;
             let bestLines = [];
             let bestLineHeight = 0;
 
             while (fontSize <= maxFontSize) {
-                ctx.font = `800 ${fontSize}px Inter, sans-serif`;
+                ctx.font = `800 ${fontSize}px system-ui, -apple-system, sans-serif`;
                 const testLines = getBulletproofLines(ctx, state.quoteText, maxAllowedWidth);
                 const testLineHeight = fontSize * 1.25;
                 const totalHeight = testLines.length * testLineHeight;
@@ -265,19 +262,19 @@
 
             if (bestLines.length === 0) {
                 fontSize = 24;
-                ctx.font = `800 ${fontSize}px Inter, sans-serif`;
+                ctx.font = `800 ${fontSize}px system-ui, -apple-system, sans-serif`;
                 bestLines = getBulletproofLines(ctx, state.quoteText, maxAllowedWidth);
                 bestLineHeight = fontSize * 1.25;
             } else {
                 fontSize -= 2;
-                ctx.font = `800 ${fontSize}px Inter, sans-serif`;
+                ctx.font = `800 ${fontSize}px system-ui, -apple-system, sans-serif`;
                 bestLines = getBulletproofLines(ctx, state.quoteText, maxAllowedWidth);
                 bestLineHeight = fontSize * 1.25;
             }
 
             // Draw Centered Scaled Quote Text
             ctx.save();
-            ctx.font = `800 ${fontSize}px Inter, sans-serif`;
+            ctx.font = `800 ${fontSize}px system-ui, -apple-system, sans-serif`;
             ctx.fillStyle = state.textColor;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
@@ -290,15 +287,14 @@
             });
             ctx.restore();
 
-            // 4. Draw Dynamic Top Header
+            // 4. Draw Dynamic Top Header (no icons)
             drawTopHeaderTags(ctx, cardX, cardY - 95, cardW);
 
-            // 5. Draw Side Icons
-            drawSideIcons(ctx, cardX, cardY, cardH);
+            // 5. Side Icons REMOVED
 
             // 6. Draw Bottom Signature Footer
             ctx.save();
-            ctx.font = '600 24px Inter, sans-serif';
+            ctx.font = '600 24px system-ui, -apple-system, sans-serif';
             ctx.fillStyle = '#64748b';
             ctx.textAlign = 'center';
             ctx.fillText(state.footerText, w / 2, cardY + cardH + 110);
@@ -344,7 +340,7 @@
 
         function drawTopHeaderTags(ctx, cardX, y, cardW) {
             ctx.save();
-            ctx.font = '700 20px Inter, sans-serif';
+            ctx.font = '700 20px system-ui, -apple-system, sans-serif';
             const pillH = 56;
 
             drawRoundedRect(ctx, cardX, y, 130, pillH, 16, '#0f172a');
@@ -374,79 +370,6 @@
             drawRoundedRect(ctx, handleX, y, handleW, pillH, 16, state.accentColor);
             ctx.fillStyle = '#ffffff';
             ctx.fillText(handleText, handleX + handleW/2, y + pillH/2);
-
-            ctx.restore();
-        }
-
-        function drawSideIcons(ctx, cardX, cardY, cardH) {
-            const leftX = 75;
-            const rightX = 1080 - 75;
-            const iconsY = [cardY + 160, cardY + 330, cardY + 500, cardY + 670, cardY + 840];
-            const radius = 34;
-
-            iconsY.forEach((y, i) => {
-                ctx.beginPath(); ctx.arc(leftX, y, radius, 0, Math.PI * 2); ctx.fillStyle = '#0f172a'; ctx.fill();
-                ctx.beginPath(); ctx.arc(rightX, y, radius, 0, Math.PI * 2); ctx.fillStyle = '#0f172a'; ctx.fill();
-            });
-
-            ctx.save();
-            ctx.strokeStyle = '#94a3b8';
-            ctx.lineWidth = 4;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-
-            // Left Icons
-            let cy = iconsY[0];
-            ctx.fillStyle = '#94a3b8'; ctx.font = '800 32px Inter, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-            ctx.fillText('f', leftX, cy + 2);
-
-            cy = iconsY[1];
-            ctx.fillText('@', leftX, cy + 2);
-
-            cy = iconsY[2];
-            ctx.font = '800 26px Inter, sans-serif';
-            ctx.fillText('𝕏', leftX, cy + 1);
-
-            cy = iconsY[3];
-            ctx.font = '800 30px Inter, sans-serif';
-            ctx.fillText('t', leftX, cy + 1);
-
-            cy = iconsY[4];
-            ctx.beginPath();
-            ctx.arc(leftX, cy, 14, Math.PI, 0, false);
-            ctx.lineTo(leftX + 14, cy + 10);
-            ctx.lineTo(leftX + 4, cy + 6);
-            ctx.lineTo(leftX - 4, cy + 6);
-            ctx.closePath();
-            ctx.fillStyle = '#94a3b8'; ctx.fill();
-
-            // Right Icons
-            cy = iconsY[0];
-            ctx.beginPath();
-            ctx.arc(rightX, cy - 2, 11, Math.PI, 0, false);
-            ctx.lineTo(rightX + 13, cy + 10);
-            ctx.quadraticCurveTo(rightX, cy + 14, rightX - 13, cy + 10);
-            ctx.closePath();
-            ctx.fillStyle = '#94a3b8'; ctx.fill();
-
-            cy = iconsY[1];
-            ctx.font = '700 26px Inter, sans-serif'; ctx.fillText('♪', rightX, cy + 2);
-
-            cy = iconsY[2];
-            ctx.beginPath();
-            ctx.moveTo(rightX - 10, cy - 10);
-            ctx.lineTo(rightX + 12, cy);
-            ctx.lineTo(rightX - 10, cy + 10);
-            ctx.closePath();
-            ctx.fillStyle = '#94a3b8'; ctx.fill();
-
-            cy = iconsY[3];
-            ctx.strokeRect(rightX - 13, cy - 13, 26, 26);
-            ctx.beginPath(); ctx.arc(rightX, cy, 6, 0, Math.PI * 2); ctx.stroke();
-            ctx.beginPath(); ctx.arc(rightX + 8, cy - 8, 2, 0, Math.PI * 2); ctx.fillStyle = '#94a3b8'; ctx.fill();
-
-            cy = iconsY[4];
-            ctx.font = '700 22px Inter, sans-serif'; ctx.fillText('in', rightX, cy + 1);
 
             ctx.restore();
         }
