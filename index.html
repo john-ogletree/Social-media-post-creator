@@ -56,6 +56,10 @@
         .brand-link:hover {
             opacity: 0.8;
         }
+        ::placeholder {
+            color: #475569;
+            opacity: 0.6;
+        }
     </style>
 </head>
 <body class="h-full font-sans antialiased flex flex-col overflow-hidden select-none">
@@ -121,7 +125,7 @@
                 <div id="tab-content" class="tab-content space-y-3">
                     <div>
                         <label class="text-xs font-semibold text-slate-300 mb-1 block">Main Quote / Card Text</label>
-                        <textarea id="quoteText" rows="4" oninput="updatePost()" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-sm text-white focus:border-indigo-500 focus:outline-none resize-none font-semibold">Walls don't talk, but they definitely listen</textarea>
+                        <textarea id="quoteText" rows="4" oninput="updatePost()" placeholder="Enter your quote here..." class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-sm text-white focus:border-indigo-500 focus:outline-none resize-none font-semibold"></textarea>
                     </div>
                     <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-3 text-xs">
                         <span class="font-semibold text-slate-300 block">Theme & Color Customization</span>
@@ -231,31 +235,31 @@
                         <div class="grid grid-cols-2 gap-2">
                             <div>
                                 <label class="text-[10px] text-slate-400 block mb-1">Day Tag (JS Auto)</label>
-                                <input type="text" id="tagDay" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                                <input type="text" id="tagDay" oninput="updatePost()" placeholder="DAY 001" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
                             </div>
                             <div>
                                 <label class="text-[10px] text-slate-400 block mb-1">Progress % (JS Auto)</label>
-                                <input type="text" id="tagProgress" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                                <input type="text" id="tagProgress" oninput="updatePost()" placeholder="0%" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
                             </div>
                         </div>
                         <div class="grid grid-cols-2 gap-2 pt-1">
                             <div>
                                 <label class="text-[10px] text-slate-400 block mb-1">Date (JS Auto)</label>
-                                <input type="text" id="tagDate" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                                <input type="text" id="tagDate" oninput="updatePost()" placeholder="DD.MM.YYYY" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
                             </div>
                             <div>
                                 <label class="text-[10px] text-slate-400 block mb-1">Year (JS Auto)</label>
-                                <input type="text" id="tagYear" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                                <input type="text" id="tagYear" oninput="updatePost()" placeholder="YYYY" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
                             </div>
                         </div>
                         <div class="pt-1">
                             <label class="text-[10px] text-slate-400 block mb-1">Top Handle</label>
-                            <input type="text" id="tagHandle" value="@john0ogletree" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                            <input type="text" id="tagHandle" oninput="updatePost()" placeholder="@username" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
                         </div>
                     </div>
                     <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-3 text-xs">
                         <span class="font-semibold text-slate-300 block">Bottom Signature</span>
-                        <input type="text" id="footerText" value="@john0ogletree // john-ogletree.github.io/omnipost" oninput="updatePost()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
+                        <input type="text" id="footerText" oninput="updatePost()" placeholder="@username // your-website.com" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white">
                     </div>
                 </div>
 
@@ -271,26 +275,26 @@
                         </p>
                         
                         <div class="space-y-2.5 pt-1">
-                            <a href="https://cash.app/$john0ogletree" target="_blank" rel="noopener noreferrer" class="support-link flex items-center justify-between bg-slate-950 border border-slate-700 hover:border-green-500/50 rounded-lg px-3.5 py-2.5 transition-colors no-underline">
+                            <a href="https://cash.app/" target="_blank" rel="noopener noreferrer" class="support-link flex items-center justify-between bg-slate-950 border border-slate-700 hover:border-green-500/50 rounded-lg px-3.5 py-2.5 transition-colors no-underline">
                                 <div class="flex items-center gap-2.5">
                                     <span class="text-lg">💰</span>
                                     <span class="font-medium text-sm text-white">CashApp</span>
                                 </div>
-                                <span class="text-xs text-green-400 font-mono">$john0ogletree</span>
+                                <span class="text-xs text-green-400 font-mono">$yourhandle</span>
                             </a>
                             <a href="https://www.chime.com/" target="_blank" rel="noopener noreferrer" class="support-link flex items-center justify-between bg-slate-950 border border-slate-700 hover:border-blue-500/50 rounded-lg px-3.5 py-2.5 transition-colors no-underline">
                                 <div class="flex items-center gap-2.5">
                                     <span class="text-lg">🏦</span>
                                     <span class="font-medium text-sm text-white">Chime</span>
                                 </div>
-                                <span class="text-xs text-blue-400 font-mono">$john0ogletree</span>
+                                <span class="text-xs text-blue-400 font-mono">$yourhandle</span>
                             </a>
-                            <a href="https://venmo.com/john0ogletree" target="_blank" rel="noopener noreferrer" class="support-link flex items-center justify-between bg-slate-950 border border-slate-700 hover:border-blue-400/50 rounded-lg px-3.5 py-2.5 transition-colors no-underline">
+                            <a href="https://venmo.com/" target="_blank" rel="noopener noreferrer" class="support-link flex items-center justify-between bg-slate-950 border border-slate-700 hover:border-blue-400/50 rounded-lg px-3.5 py-2.5 transition-colors no-underline">
                                 <div class="flex items-center gap-2.5">
                                     <span class="text-lg">💳</span>
                                     <span class="font-medium text-sm text-white">Venmo</span>
                                 </div>
-                                <span class="text-xs text-blue-300 font-mono">@john0ogletree</span>
+                                <span class="text-xs text-blue-300 font-mono">@yourhandle</span>
                             </a>
                         </div>
                         <div class="mt-2 pt-2 border-t border-slate-800/60 text-[10px] text-slate-500 text-center">
@@ -315,7 +319,7 @@
     <script>
         (function() {
             const state = {
-                quoteText: "Walls don't talk, but they definitely listen",
+                quoteText: "",
                 bgBaseColor: "#04060a",
                 cardBgColor: "#0d111c",
                 textColor: "#ffffff",
@@ -324,8 +328,8 @@
                 tagProgress: "",
                 tagDate: "",
                 tagYear: "",
-                tagHandle: "@john0ogletree",
-                footerText: "@john0ogletree // john-ogletree.github.io/omnipost"
+                tagHandle: "",
+                footerText: ""
             };
 
             const canvas = document.getElementById('postCanvas');
@@ -479,17 +483,17 @@
                 drawRoundedRect(ctx, cardX, y, 130, pillH, 16, '#0f172a');
                 ctx.fillStyle = '#94a3b8';
                 ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-                ctx.fillText(state.tagDay, cardX + 65, y + pillH/2);
+                ctx.fillText(state.tagDay || 'DAY 000', cardX + 65, y + pillH/2);
 
                 drawRoundedRect(ctx, cardX + 140, y, 90, pillH, 16, '#0f172a');
                 ctx.fillStyle = '#94a3b8';
-                ctx.fillText(state.tagProgress, cardX + 140 + 45, y + pillH/2);
+                ctx.fillText(state.tagProgress || '0%', cardX + 140 + 45, y + pillH/2);
 
                 drawRoundedRect(ctx, cardX + 240, y, 95, pillH, 16, '#0f172a');
                 ctx.fillStyle = '#94a3b8';
-                ctx.fillText(state.tagYear, cardX + 240 + 47, y + pillH/2);
+                ctx.fillText(state.tagYear || 'YYYY', cardX + 240 + 47, y + pillH/2);
 
-                const handleText = state.tagHandle;
+                const handleText = state.tagHandle || '@username';
                 const handleW = Math.max(160, ctx.measureText(handleText).width + 30);
                 const dateW = 150;
                 const handleX = cardX + cardW - handleW;
@@ -497,7 +501,7 @@
 
                 drawRoundedRect(ctx, dateX, y, dateW, pillH, 16, state.accentColor);
                 ctx.fillStyle = '#ffffff';
-                ctx.fillText(state.tagDate, dateX + dateW/2, y + pillH/2);
+                ctx.fillText(state.tagDate || 'DD.MM.YYYY', dateX + dateW/2, y + pillH/2);
 
                 drawRoundedRect(ctx, handleX, y, handleW, pillH, 16, state.accentColor);
                 ctx.fillStyle = '#ffffff';
@@ -543,45 +547,55 @@
                 let bestLines = [];
                 let bestLineHeight = 0;
 
-                while (fontSize <= maxFontSize) {
-                    ctx.font = `800 ${fontSize}px system-ui, -apple-system, sans-serif`;
-                    const testLines = getBulletproofLines(ctx, state.quoteText, maxAllowedWidth);
-                    const testLineHeight = fontSize * 1.25;
-                    const totalHeight = testLines.length * testLineHeight;
-                    if (totalHeight <= maxAllowedHeight) {
-                        bestLines = testLines;
-                        bestLineHeight = testLineHeight;
-                        fontSize += 2;
-                    } else {
-                        break;
-                    }
-                }
-
-                if (bestLines.length === 0) {
-                    fontSize = 24;
-                    ctx.font = `800 ${fontSize}px system-ui, -apple-system, sans-serif`;
-                    bestLines = getBulletproofLines(ctx, state.quoteText, maxAllowedWidth);
-                    bestLineHeight = fontSize * 1.25;
+                if (state.quoteText.trim() === '') {
+                    ctx.save();
+                    ctx.font = '600 32px system-ui, -apple-system, sans-serif';
+                    ctx.fillStyle = '#475569';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('Enter your quote above', w / 2, cardY + cardH / 2);
+                    ctx.restore();
                 } else {
-                    fontSize -= 2;
+                    while (fontSize <= maxFontSize) {
+                        ctx.font = `800 ${fontSize}px system-ui, -apple-system, sans-serif`;
+                        const testLines = getBulletproofLines(ctx, state.quoteText, maxAllowedWidth);
+                        const testLineHeight = fontSize * 1.25;
+                        const totalHeight = testLines.length * testLineHeight;
+                        if (totalHeight <= maxAllowedHeight) {
+                            bestLines = testLines;
+                            bestLineHeight = testLineHeight;
+                            fontSize += 2;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    if (bestLines.length === 0) {
+                        fontSize = 24;
+                        ctx.font = `800 ${fontSize}px system-ui, -apple-system, sans-serif`;
+                        bestLines = getBulletproofLines(ctx, state.quoteText, maxAllowedWidth);
+                        bestLineHeight = fontSize * 1.25;
+                    } else {
+                        fontSize -= 2;
+                        ctx.font = `800 ${fontSize}px system-ui, -apple-system, sans-serif`;
+                        bestLines = getBulletproofLines(ctx, state.quoteText, maxAllowedWidth);
+                        bestLineHeight = fontSize * 1.25;
+                    }
+
+                    ctx.save();
                     ctx.font = `800 ${fontSize}px system-ui, -apple-system, sans-serif`;
-                    bestLines = getBulletproofLines(ctx, state.quoteText, maxAllowedWidth);
-                    bestLineHeight = fontSize * 1.25;
+                    ctx.fillStyle = state.textColor;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+
+                    const totalTextHeight = bestLines.length * bestLineHeight;
+                    let startY = cardY + (cardH / 2) - (totalTextHeight / 2);
+
+                    bestLines.forEach((line, index) => {
+                        ctx.fillText(line, w / 2, startY + (index * bestLineHeight) + (bestLineHeight / 2));
+                    });
+                    ctx.restore();
                 }
-
-                ctx.save();
-                ctx.font = `800 ${fontSize}px system-ui, -apple-system, sans-serif`;
-                ctx.fillStyle = state.textColor;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-
-                const totalTextHeight = bestLines.length * bestLineHeight;
-                let startY = cardY + (cardH / 2) - (totalTextHeight / 2);
-
-                bestLines.forEach((line, index) => {
-                    ctx.fillText(line, w / 2, startY + (index * bestLineHeight) + (bestLineHeight / 2));
-                });
-                ctx.restore();
 
                 drawTopHeaderTags(ctx, cardX, cardY - 95, cardW);
 
@@ -590,7 +604,7 @@
                 ctx.fillStyle = '#64748b';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                ctx.fillText(state.footerText, w / 2, cardY + cardH + 110);
+                ctx.fillText(state.footerText || '@username // your-website.com', w / 2, cardY + cardH + 110);
                 ctx.restore();
             };
 
@@ -647,9 +661,9 @@
 
             // ============ INIT ============
             window.addEventListener('DOMContentLoaded', () => {
-                loadLiveDateTime();
+                updatePost();
             });
         })();
     </script>
 </body>
-</html>
+    </html>
