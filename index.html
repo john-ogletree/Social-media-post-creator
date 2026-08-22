@@ -49,13 +49,6 @@
         .template-preview:active {
             transform: scale(0.95);
         }
-        .brand-link {
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-        .brand-link:hover {
-            opacity: 0.8;
-        }
         ::placeholder {
             color: #475569;
             opacity: 0.6;
@@ -65,16 +58,7 @@
 <body class="h-full font-sans antialiased flex flex-col overflow-hidden select-none">
 
     <!-- Top Navigation -->
-    <header class="h-14 border-b border-slate-800 bg-slate-950/90 backdrop-blur-md px-4 flex items-center justify-between z-30 shrink-0">
-        <a href="https://john-ogletree.github.io" target="_blank" rel="noopener noreferrer" class="brand-link flex items-center space-x-2.5 hover:opacity-80 transition-opacity">
-            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                <span class="text-white font-bold text-xs">◈</span>
-            </div>
-            <div>
-                <h1 class="font-bold text-sm tracking-tight text-white">OmniPost <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300">Community</span></h1>
-                <span class="text-[8px] text-slate-500 hidden sm:block">john-ogletree.github.io</span>
-            </div>
-        </a>
+    <header class="h-14 border-b border-slate-800 bg-slate-950/90 backdrop-blur-md px-4 flex items-center justify-end z-30 shrink-0">
         <div class="flex items-center gap-2">
             <a href="https://john-ogletree.github.io" target="_blank" rel="noopener noreferrer" class="text-[10px] text-slate-400 hover:text-white transition-colors hidden sm:inline-block border border-slate-700 hover:border-slate-500 rounded-lg px-2.5 py-1">
                 🌐 Landing
@@ -666,4 +650,4 @@
         })();
     </script>
 </body>
-    </html>
+</html>
